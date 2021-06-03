@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.anggasaraya.moviecatalogue.databinding.ActivityDetailMovieBinding
+import com.anggasaraya.moviecatalogue.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide
 
 class DetailMovieActivity : AppCompatActivity() {
@@ -16,7 +17,8 @@ class DetailMovieActivity : AppCompatActivity() {
         detailMovieBinding = ActivityDetailMovieBinding.inflate(layoutInflater)
         setContentView(detailMovieBinding.root)
 
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MovieViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
 
         val extras = intent.extras
         if(extras != null){

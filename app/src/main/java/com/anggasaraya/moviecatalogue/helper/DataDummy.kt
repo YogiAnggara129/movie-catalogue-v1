@@ -1,8 +1,8 @@
 package com.anggasaraya.moviecatalogue.helper
 
 import com.anggasaraya.moviecatalogue.R
-import com.anggasaraya.moviecatalogue.data.MovieEntity
-import com.anggasaraya.moviecatalogue.data.TVShowEntity
+import com.anggasaraya.moviecatalogue.data.local.entity.MovieEntity
+import com.anggasaraya.moviecatalogue.data.local.entity.TVShowEntity
 
 object DataDummy {
     fun generateDummyMovies(): ArrayList<MovieEntity> {

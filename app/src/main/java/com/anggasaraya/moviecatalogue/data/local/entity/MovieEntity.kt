@@ -1,4 +1,4 @@
-package com.anggasaraya.moviecatalogue.data
+package com.anggasaraya.moviecatalogue.data.local.entity
 
 data class MovieEntity (
     val id: String,

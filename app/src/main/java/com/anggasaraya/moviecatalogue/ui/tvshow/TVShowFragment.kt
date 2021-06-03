@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.anggasaraya.moviecatalogue.databinding.FragmentTVShowBinding
+import com.anggasaraya.moviecatalogue.viewmodel.ViewModelFactory
 
 class TVShowFragment : Fragment() {
     private lateinit var fragmentTVShowBinding: FragmentTVShowBinding
@@ -23,7 +24,8 @@ class TVShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if(activity != null){
-            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TVShowViewModel::class.java]
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            val viewModel = ViewModelProvider(this, factory)[TVShowViewModel::class.java]
             val tvShows = viewModel.getAllTVShows()
             val tvShowAdapter = TVShowAdapter()
             tvShowAdapter.setTVShows(tvShows)

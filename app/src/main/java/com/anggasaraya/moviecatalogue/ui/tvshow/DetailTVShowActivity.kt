@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.anggasaraya.moviecatalogue.databinding.ActivityDetailTVShowBinding
+import com.anggasaraya.moviecatalogue.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide
 
 class DetailTVShowActivity : AppCompatActivity() {
@@ -18,7 +19,8 @@ class DetailTVShowActivity : AppCompatActivity() {
         detailTVShowBinding = ActivityDetailTVShowBinding.inflate(layoutInflater)
         setContentView(detailTVShowBinding.root)
 
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TVShowViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel = ViewModelProvider(this, factory)[TVShowViewModel::class.java]
 
         val extras = intent.extras
         if(extras != null){

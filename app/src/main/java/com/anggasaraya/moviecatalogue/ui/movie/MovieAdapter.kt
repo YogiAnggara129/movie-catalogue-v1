@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.anggasaraya.moviecatalogue.data.MovieEntity
+import com.anggasaraya.moviecatalogue.data.local.entity.MovieEntity
 import com.anggasaraya.moviecatalogue.databinding.ItemsListBinding
 import com.bumptech.glide.Glide
 
