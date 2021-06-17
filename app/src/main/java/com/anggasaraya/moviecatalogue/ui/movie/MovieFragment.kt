@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anggasaraya.moviecatalogue.data.local.entity.MovieEntity
 import com.anggasaraya.moviecatalogue.databinding.FragmentMovieBinding
 import com.anggasaraya.moviecatalogue.viewmodel.ViewModelFactory
 
@@ -25,9 +27,13 @@ class MovieFragment : Fragment() {
         if(activity != null){
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
-            val movies = viewModel.getAllMovies()
             val movieAdapter = MovieAdapter()
-            movieAdapter.setMovies(movies)
+            val moviesObserver = Observer<List<MovieEntity>> { movies ->
+                movieAdapter.setMovies(movies)
+                //movieAdapter.notifyDataSetChanged()
+            }
+            viewModel.getAllMovies().observe(this, moviesObserver)
+            /*movieAdapter.setMovies(movies)*/
 
             with(fragmentMovieAdapter.rvMovie){
                 layoutManager = LinearLayoutManager(context)

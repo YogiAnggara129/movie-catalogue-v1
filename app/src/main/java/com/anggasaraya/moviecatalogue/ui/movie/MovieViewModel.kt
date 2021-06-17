@@ -1,8 +1,10 @@
 package com.anggasaraya.moviecatalogue.ui.movie
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.anggasaraya.moviecatalogue.data.CatalogueRepository
 import com.anggasaraya.moviecatalogue.data.local.entity.MovieEntity
+import com.anggasaraya.moviecatalogue.data.remote.response.ResultsItem
 import com.anggasaraya.moviecatalogue.helper.DataDummy
 
 class MovieViewModel(private val mCatalogueRepository: CatalogueRepository) : ViewModel() {
@@ -14,6 +16,6 @@ class MovieViewModel(private val mCatalogueRepository: CatalogueRepository) : Vi
 
     fun getSelectedMovie(): MovieEntity = mCatalogueRepository.getMovieSelected(id)
 
-    fun getAllMovies(): ArrayList<MovieEntity> = mCatalogueRepository.getAllMovies()
+    fun getAllMovies(): LiveData<List<MovieEntity>> = mCatalogueRepository.getAllMovies()
 
 }

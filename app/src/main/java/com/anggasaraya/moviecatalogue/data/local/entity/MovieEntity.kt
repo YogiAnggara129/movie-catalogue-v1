@@ -4,12 +4,12 @@ data class MovieEntity (
     val id: String,
     val dateReleased: String,
     val title: String,
-    val genre: String,
-    val userScore: String,
+    val genre: String? = null,
+    val userScore: String? = null,
     val description: String,
-    val status: String,
-    val language: String,
-    val budget: String,
-    val income: String,
-    val imagePath: Int
+    val status: String? = null,
+    val language: String? = null,
+    val budget: String? = null,
+    val income: String? = null,
+    val imagePath: String
 )

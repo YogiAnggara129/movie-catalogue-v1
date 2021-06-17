@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private val listMovies = ArrayList<MovieEntity>()
 
-    fun setMovies(movies: ArrayList<MovieEntity>){
+    fun setMovies(movies: List<MovieEntity>){
         if (movies == null) return
         this.listMovies.clear()
         this.listMovies.addAll(movies)

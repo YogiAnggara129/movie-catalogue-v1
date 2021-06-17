@@ -5,7 +5,7 @@ import com.anggasaraya.moviecatalogue.data.local.entity.MovieEntity
 import com.anggasaraya.moviecatalogue.data.local.entity.TVShowEntity
 
 object DataDummy {
-    fun generateDummyMovies(): ArrayList<MovieEntity> {
+    /*fun generateDummyMovies(): ArrayList<MovieEntity> {
         val movies = ArrayList<MovieEntity>()
         movies.add(MovieEntity(
                 "1m",
@@ -138,7 +138,7 @@ object DataDummy {
                 R.drawable.poster_infinity_war
         ))
         return movies
-    }
+    }*/
     fun generateDummyTVShows(): ArrayList<TVShowEntity> {
         val tvShows = ArrayList<TVShowEntity>()
         tvShows.add(TVShowEntity(
