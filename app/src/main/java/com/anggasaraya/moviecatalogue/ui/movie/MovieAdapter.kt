@@ -43,7 +43,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                     itemView.context.startActivity(intent)
                 }
                 Glide.with(itemView.context)
-                    .load(movie.imagePath)
+                    .load("https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${movie.imagePath}")
                     .into(imgPoster)
             }
         }

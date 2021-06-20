@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.anggasaraya.moviecatalogue.data.local.entity.TVShowEntity
 import com.anggasaraya.moviecatalogue.databinding.FragmentTVShowBinding
 import com.anggasaraya.moviecatalogue.viewmodel.ViewModelFactory
 
@@ -26,9 +28,15 @@ class TVShowFragment : Fragment() {
         if(activity != null){
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory)[TVShowViewModel::class.java]
-            val tvShows = viewModel.getAllTVShows()
             val tvShowAdapter = TVShowAdapter()
-            tvShowAdapter.setTVShows(tvShows)
+
+            fragmentTVShowBinding.progressBar.visibility = View.VISIBLE
+            val moviesObserver = Observer<List<TVShowEntity>> { tvShoww ->
+                fragmentTVShowBinding.progressBar.visibility = View.GONE
+                tvShowAdapter.setTVShows(tvShoww)
+                tvShowAdapter.notifyDataSetChanged()
+            }
+            viewModel.getAllTVShows().observe(this, moviesObserver)
 
             with(fragmentTVShowBinding.rvTvshow){
                 layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)

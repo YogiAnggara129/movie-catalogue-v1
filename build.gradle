@@ -40,6 +40,7 @@ ext {
     recyclerViewVersion = '1.1.0'
     glideVersion = '4.10.0'
     retrofitVersion = '2.9.0'
+    idleResourceVersion = '3.2.0'
     okhttp3Version = '4.9.0'
 
     archLifecycleVersion = '2.1.0'

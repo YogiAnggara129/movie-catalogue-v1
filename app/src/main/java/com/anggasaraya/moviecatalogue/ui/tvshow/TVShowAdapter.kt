@@ -47,7 +47,7 @@ class TVShowAdapter : RecyclerView.Adapter<TVShowAdapter.TVShowViewHolder>() {
                     itemView.context.startActivity(intent)
                 }
                 Glide.with(itemView.context)
-                    .load(tvShow.imagePath)
+                    .load("https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${tvShow.imagePath}")
                     .into(imgPoster)
             }
         }

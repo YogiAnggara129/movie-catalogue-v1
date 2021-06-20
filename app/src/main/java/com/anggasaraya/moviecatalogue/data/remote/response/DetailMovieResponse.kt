@@ -23,7 +23,7 @@ data class DetailMovieResponse(
 	val revenue: Int? = null,
 
 	@field:SerializedName("genres")
-	val genres: List<GenresItem?>? = null,
+	val genres: List<GenresItemMovie?>? = null,
 
 	@field:SerializedName("popularity")
 	val popularity: Double? = null,
@@ -53,7 +53,7 @@ data class DetailMovieResponse(
 	val posterPath: String? = null,
 
 	@field:SerializedName("spoken_languages")
-	val spokenLanguages: List<SpokenLanguagesItem?>? = null,
+	val spokenLanguages: List<SpokenLanguagesItemMovie?>? = null,
 
 	@field:SerializedName("production_companies")
 	val productionCompanies: List<ProductionCompaniesItem?>? = null,
@@ -80,7 +80,7 @@ data class DetailMovieResponse(
 	val status: String? = null
 )
 
-data class GenresItem(
+data class GenresItemMovie(
 
 	@field:SerializedName("name")
 	val name: String? = null,
@@ -113,7 +113,7 @@ data class ProductionCountriesItem(
 	val name: String? = null
 )
 
-data class SpokenLanguagesItem(
+data class SpokenLanguagesItemMovie(
 
 	@field:SerializedName("name")
 	val name: String? = null,

@@ -1,7 +1,6 @@
 package com.anggasaraya.moviecatalogue.helper
 
 import com.anggasaraya.moviecatalogue.R
-import com.anggasaraya.moviecatalogue.data.local.entity.MovieEntity
 import com.anggasaraya.moviecatalogue.data.local.entity.TVShowEntity
 
 object DataDummy {
@@ -139,7 +138,7 @@ object DataDummy {
         ))
         return movies
     }*/
-    fun generateDummyTVShows(): ArrayList<TVShowEntity> {
+    /*fun generateDummyTVShows(): ArrayList<TVShowEntity> {
         val tvShows = ArrayList<TVShowEntity>()
         tvShows.add(TVShowEntity(
                 "1t",
@@ -252,5 +251,5 @@ object DataDummy {
                 R.drawable.poster_iron_fist
         ))
         return tvShows
-    }
+    }*/
 }

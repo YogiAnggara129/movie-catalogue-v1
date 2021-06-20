@@ -1,13 +1,13 @@
 package com.anggasaraya.moviecatalogue.data.local.entity
 
-data class TVShowEntity (
-    val id: String,
-    val dateReleased: String,
-    val title: String,
-    val genre: String,
-    val userScore: String,
-    val description: String,
-    val status: String,
-    val language: String,
-    val imagePath: Int
+data class TVShowEntity(
+        val id: String,
+        val dateReleased: String,
+        val title: String,
+        val genre: String? = null,
+        val userScore: String? = null,
+        val description: String,
+        val status: String? = null,
+        val language: String? = null,
+        val imagePath: String
 )
