@@ -13,13 +13,13 @@ import com.anggasaraya.moviecatalogue.databinding.FragmentMovieBinding
 import com.anggasaraya.moviecatalogue.viewmodel.ViewModelFactory
 
 class MovieFragment : Fragment() {
-    private lateinit var fragmentMovieAdapter: FragmentMovieBinding
+    private lateinit var fragmentMovieBinding: FragmentMovieBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        fragmentMovieAdapter = FragmentMovieBinding.inflate(layoutInflater, container, false)
-        return fragmentMovieAdapter.root
+        fragmentMovieBinding = FragmentMovieBinding.inflate(layoutInflater, container, false)
+        return fragmentMovieBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,15 +29,15 @@ class MovieFragment : Fragment() {
             val viewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
             val movieAdapter = MovieAdapter()
 
-            fragmentMovieAdapter.progressBar.visibility = View.VISIBLE
+            fragmentMovieBinding.progressBar.visibility = View.VISIBLE
             val moviesObserver = Observer<List<MovieEntity>> { movies ->
-                fragmentMovieAdapter.progressBar.visibility = View.GONE
+                fragmentMovieBinding.progressBar.visibility = View.GONE
                 movieAdapter.setMovies(movies)
                 movieAdapter.notifyDataSetChanged()
             }
-            viewModel.getAllMovies().observe(this, moviesObserver)
+            viewModel.getAllMovies().observe(viewLifecycleOwner, moviesObserver)
 
-            with(fragmentMovieAdapter.rvMovie){
+            with(fragmentMovieBinding.rvMovie){
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 adapter = movieAdapter

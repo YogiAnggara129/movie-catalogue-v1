@@ -20,7 +20,7 @@ data class DetailMovieResponse(
 	val backdropPath: String? = null,
 
 	@field:SerializedName("revenue")
-	val revenue: Int? = null,
+	val revenue: Long? = null,
 
 	@field:SerializedName("genres")
 	val genres: List<GenresItemMovie?>? = null,
@@ -29,7 +29,7 @@ data class DetailMovieResponse(
 	val popularity: Double? = null,
 
 	@field:SerializedName("production_countries")
-	val productionCountries: List<ProductionCountriesItem?>? = null,
+	val productionCountries: List<ProductionCountriesItemMovie?>? = null,
 
 	@field:SerializedName("id")
 	val id: Int? = null,
@@ -38,7 +38,7 @@ data class DetailMovieResponse(
 	val voteCount: Int? = null,
 
 	@field:SerializedName("budget")
-	val budget: Int? = null,
+	val budget: Long? = null,
 
 	@field:SerializedName("overview")
 	val overview: String? = null,
@@ -56,7 +56,7 @@ data class DetailMovieResponse(
 	val spokenLanguages: List<SpokenLanguagesItemMovie?>? = null,
 
 	@field:SerializedName("production_companies")
-	val productionCompanies: List<ProductionCompaniesItem?>? = null,
+	val productionCompanies: List<ProductionCompaniesItemMovie?>? = null,
 
 	@field:SerializedName("release_date")
 	val releaseDate: String? = null,
@@ -104,7 +104,7 @@ data class BelongsToCollection(
 	val posterPath: String? = null
 )
 
-data class ProductionCountriesItem(
+data class ProductionCountriesItemMovie(
 
 	@field:SerializedName("iso_3166_1")
 	val iso31661: String? = null,
@@ -125,7 +125,7 @@ data class SpokenLanguagesItemMovie(
 	val englishName: String? = null
 )
 
-data class ProductionCompaniesItem(
+data class ProductionCompaniesItemMovie(
 
 	@field:SerializedName("logo_path")
 	val logoPath: String? = null,

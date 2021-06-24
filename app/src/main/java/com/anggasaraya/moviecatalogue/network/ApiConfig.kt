@@ -1,4 +1,4 @@
-package com.anggasaraya.moviecatalogue.data.remote
+package com.anggasaraya.moviecatalogue.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

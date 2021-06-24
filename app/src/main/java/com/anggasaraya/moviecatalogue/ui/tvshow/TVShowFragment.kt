@@ -36,7 +36,7 @@ class TVShowFragment : Fragment() {
                 tvShowAdapter.setTVShows(tvShoww)
                 tvShowAdapter.notifyDataSetChanged()
             }
-            viewModel.getAllTVShows().observe(this, moviesObserver)
+            viewModel.getAllTVShows().observe(viewLifecycleOwner, moviesObserver)
 
             with(fragmentTVShowBinding.rvTvshow){
                 layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)

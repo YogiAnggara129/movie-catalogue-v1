@@ -2,7 +2,7 @@ package com.anggasaraya.moviecatalogue.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class PopularTVShowResponse(
+data class TVShowResponse(
 
 	@field:SerializedName("page")
 	val page: Int? = null,
@@ -11,13 +11,13 @@ data class PopularTVShowResponse(
 	val totalPages: Int? = null,
 
 	@field:SerializedName("results")
-	val results: List<ResultsItem?>? = null,
+	val results: List<ResultsItemTVShow?>? = null,
 
 	@field:SerializedName("total_results")
 	val totalResults: Int? = null
 )
 
-data class ResultsItem(
+data class ResultsItemTVShow(
 
 	@field:SerializedName("first_air_date")
 	val firstAirDate: String? = null,

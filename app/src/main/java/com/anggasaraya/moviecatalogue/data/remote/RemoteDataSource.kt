@@ -4,11 +4,13 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.anggasaraya.moviecatalogue.data.remote.response.*
 import com.anggasaraya.moviecatalogue.helper.EspressoIdlingResource
+import com.anggasaraya.moviecatalogue.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class RemoteDataSource {
+
     @Volatile
     private var instance: RemoteDataSource? = null
 
@@ -17,17 +19,17 @@ class RemoteDataSource {
                 instance ?: RemoteDataSource()
             }
 
-    fun getAllMovies(callback: LoadMoviesCallback, page: String) {
+    fun getAllMovies(callback: LoadMoviesCallback) {
         EspressoIdlingResource.increment()
         var moviesResponses: List<ResultsItemMovie?>?
-        val client = ApiConfig.getApiService().getPopularMovies(
+        val client = ApiConfig.getApiService().getMovies(
                 "db60181fe10f220153af611c6d461e50",
-                page,
                 "id-ID",
-                "ID"
+                "popularity.desc",
+                2019
         )
-        client.enqueue(object : Callback<PopularMoviesResponse>{
-            override fun onResponse(call: Call<PopularMoviesResponse>, response: Response<PopularMoviesResponse>) {
+        client.enqueue(object : Callback<MoviesResponse>{
+            override fun onResponse(call: Call<MoviesResponse>, response: Response<MoviesResponse>) {
                 if (response.isSuccessful){
                     moviesResponses = response.body()?.results
                     Log.i(TAG, "datanya: ${moviesResponses.toString()}")
@@ -35,9 +37,10 @@ class RemoteDataSource {
                     EspressoIdlingResource.decrement()
                 }
             }
-            override fun onFailure(call: Call<PopularMoviesResponse>, t: Throwable) {
+            override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
                 t.printStackTrace()
+                EspressoIdlingResource.decrement()
             }
         })
     }
@@ -48,8 +51,7 @@ class RemoteDataSource {
         val client = ApiConfig.getApiService().getDetailMovie(
                 id,
                 "db60181fe10f220153af611c6d461e50",
-                "id-ID",
-                "ID"
+                "id-ID"
         )
         client.enqueue(object : Callback<DetailMovieResponse>{
             override fun onResponse(call: Call<DetailMovieResponse>, response: Response<DetailMovieResponse>) {
@@ -62,32 +64,35 @@ class RemoteDataSource {
             }
             override fun onFailure(call: Call<DetailMovieResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
+                t.printStackTrace()
+                EspressoIdlingResource.decrement()
             }
 
         })
     }
 
-    fun getAllTVShows(callback: LoadTVShowsCallback, page: String) {
+    fun getAllTVShows(callback: LoadTVShowsCallback) {
         EspressoIdlingResource.increment()
-        var moviesResponses: List<ResultsItem?>?
-        val client = ApiConfig.getApiService().getPopularTVShows(
+        var moviesRespons: List<ResultsItemTVShow?>?
+        val client = ApiConfig.getApiService().getTVShows(
                 "db60181fe10f220153af611c6d461e50",
-                page,
                 "id-ID",
-                "ID"
+                "popularity.desc",
+                2019
         )
-        client.enqueue(object : Callback<PopularTVShowResponse>{
-            override fun onResponse(call: Call<PopularTVShowResponse>, response: Response<PopularTVShowResponse>) {
+        client.enqueue(object : Callback<TVShowResponse>{
+            override fun onResponse(call: Call<TVShowResponse>, response: Response<TVShowResponse>) {
                 if (response.isSuccessful){
-                    moviesResponses = response.body()?.results
-                    Log.i(TAG, "datanya: ${moviesResponses.toString()}")
-                    callback.onAllTVShowsReceived(moviesResponses)
+                    moviesRespons = response.body()?.results
+                    Log.i(TAG, "datanya: ${moviesRespons.toString()}")
+                    callback.onAllTVShowsReceived(moviesRespons)
                     EspressoIdlingResource.decrement()
                 }
             }
-            override fun onFailure(call: Call<PopularTVShowResponse>, t: Throwable) {
+            override fun onFailure(call: Call<TVShowResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
                 t.printStackTrace()
+                EspressoIdlingResource.decrement()
             }
         })
     }
@@ -98,8 +103,7 @@ class RemoteDataSource {
         val client = ApiConfig.getApiService().getDetailTVShow(
                 id,
                 "db60181fe10f220153af611c6d461e50",
-                "id-ID",
-                "ID"
+                "id-ID"
         )
         client.enqueue(object : Callback<DetailTVShowResponse>{
             override fun onResponse(call: Call<DetailTVShowResponse>, response: Response<DetailTVShowResponse>) {
@@ -112,24 +116,28 @@ class RemoteDataSource {
             }
             override fun onFailure(call: Call<DetailTVShowResponse>, t: Throwable) {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
+                t.printStackTrace()
+                EspressoIdlingResource.decrement()
             }
 
         })
     }
+
+    interface LoadMoviesCallback {
+        fun onAllMoviesReceived(moviesResponses: List<ResultsItemMovie?>?)
+    }
+
+    interface LoadMovieSelectedCallback {
+        fun onMovieSelectedReceived(movieResponse: DetailMovieResponse?)
+    }
+
+    interface LoadTVShowsCallback {
+        fun onAllTVShowsReceived(tvShowRespons: List<ResultsItemTVShow?>?)
+    }
+
+    interface LoadTVShowSelectedCallback {
+        fun onTVShowsSelectedReceived(tvShowResponse: DetailTVShowResponse?)
+    }
 }
 
-interface LoadMoviesCallback {
-    fun onAllMoviesReceived(moviesResponses: List<ResultsItemMovie?>?)
-}
 
-interface LoadMovieSelectedCallback {
-    fun onMovieSelectedReceived(movieResponse: DetailMovieResponse?)
-}
-
-interface LoadTVShowsCallback {
-    fun onAllTVShowsReceived(tvShowResponses: List<ResultsItem?>?)
-}
-
-interface LoadTVShowSelectedCallback {
-    fun onTVShowsSelectedReceived(tvShowResponse: DetailTVShowResponse?)
-}

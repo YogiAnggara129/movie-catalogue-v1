@@ -10,17 +10,7 @@ import com.anggasaraya.moviecatalogue.data.remote.response.DetailTVShowResponse
 import com.anggasaraya.moviecatalogue.data.remote.response.ResultsItemTVShow
 import com.anggasaraya.moviecatalogue.data.remote.response.ResultsItemMovie
 
-class CatalogueRepository private constructor(private val remoteDataSource: RemoteDataSource) : CatalogueDataSource{
-
-    companion object{
-        @Volatile
-        private var instance: CatalogueRepository? = null
-
-        fun getInstance(remoteData: RemoteDataSource): CatalogueRepository =
-                instance ?: synchronized(this){
-                    instance ?: CatalogueRepository(remoteData)
-                }
-    }
+class FakeCatalogueRepository(private val remoteDataSource: RemoteDataSource) : CatalogueDataSource{
 
     override fun getAllMovies(): LiveData<List<MovieEntity>> {
         val movieResults = MutableLiveData<List<MovieEntity>>()
