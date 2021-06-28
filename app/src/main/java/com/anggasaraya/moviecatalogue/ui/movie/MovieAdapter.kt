@@ -3,18 +3,24 @@ package com.anggasaraya.moviecatalogue.ui.movie
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.anggasaraya.moviecatalogue.data.local.entity.MovieEntity
 import com.anggasaraya.moviecatalogue.databinding.ItemsListBinding
 import com.bumptech.glide.Glide
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-    private val listMovies = ArrayList<MovieEntity>()
+class MovieAdapter : PagedListAdapter<MovieEntity, MovieAdapter.MovieViewHolder>(DIFF_CALLBACK) {
 
-    fun setMovies(movies: List<MovieEntity>){
-        if (movies == null) return
-        this.listMovies.clear()
-        this.listMovies.addAll(movies)
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieEntity>() {
+            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
+            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieAdapter.MovieViewHolder {
@@ -22,13 +28,9 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         return MovieViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return listMovies.size
-    }
-
     override fun onBindViewHolder(holder: MovieAdapter.MovieViewHolder, position: Int) {
-        val movie = listMovies[position]
-        holder.bind(movie)
+        val movie = getItem(position)
+        if (movie != null) holder.bind(movie)
     }
 
     inner class MovieViewHolder(private val binding: ItemsListBinding): RecyclerView.ViewHolder(binding.root) {

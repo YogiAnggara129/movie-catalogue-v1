@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.anggasaraya.moviecatalogue.data.CatalogueRepository
 import com.anggasaraya.moviecatalogue.data.local.entity.MovieEntity
 import com.anggasaraya.moviecatalogue.helper.DataDummy
+import com.anggasaraya.moviecatalogue.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -20,9 +21,9 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class MovieViewModelTest{
     private lateinit var viewModel: MovieViewModel
-    private val dummyMovies = DataDummy.generateDummyMovies()
-    private val dummyMovie = dummyMovies[0]
-    private val movieId = dummyMovie.id
+    //private val dummyMovies = Resource.success(DataDummy.generateDummyMovies())
+    //private val dummyMovie = dummyMovies[0]
+    //private val movieId = dummyMovie.id
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -31,7 +32,7 @@ class MovieViewModelTest{
     private lateinit var catalogueRepository: CatalogueRepository
 
     @Mock
-    private lateinit var observer: Observer<List<MovieEntity>>
+    private lateinit var observer: Observer<Resource<List<MovieEntity>>>
 
     @Before
     fun setUp() {
@@ -40,7 +41,8 @@ class MovieViewModelTest{
 
     @Test
     fun getMovies() {
-        val movies = MutableLiveData<List<MovieEntity>>()
+        val dummyMovies = Resource.success(DataDummy.generateDummyMovies())
+        val movies = MutableLiveData<Resource<List<MovieEntity>>>()
         movies.value = dummyMovies
 
         `when`(catalogueRepository.getAllMovies()).thenReturn(movies)

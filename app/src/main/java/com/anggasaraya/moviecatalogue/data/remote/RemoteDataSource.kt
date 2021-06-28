@@ -2,6 +2,8 @@ package com.anggasaraya.moviecatalogue.data.remote
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.anggasaraya.moviecatalogue.data.remote.response.*
 import com.anggasaraya.moviecatalogue.helper.EspressoIdlingResource
 import com.anggasaraya.moviecatalogue.network.ApiConfig
@@ -19,9 +21,9 @@ class RemoteDataSource {
                 instance ?: RemoteDataSource()
             }
 
-    fun getAllMovies(callback: LoadMoviesCallback) {
+    fun getAllMovies(): LiveData<ApiResponse<List<ResultsItemMovie?>>> {
         EspressoIdlingResource.increment()
-        var moviesResponses: List<ResultsItemMovie?>?
+        val moviesResponse = MutableLiveData<ApiResponse<List<ResultsItemMovie?>>>()
         val client = ApiConfig.getApiService().getMovies(
                 "db60181fe10f220153af611c6d461e50",
                 "id-ID",
@@ -31,9 +33,7 @@ class RemoteDataSource {
         client.enqueue(object : Callback<MoviesResponse>{
             override fun onResponse(call: Call<MoviesResponse>, response: Response<MoviesResponse>) {
                 if (response.isSuccessful){
-                    moviesResponses = response.body()?.results
-                    Log.i(TAG, "datanya: ${moviesResponses.toString()}")
-                    callback.onAllMoviesReceived(moviesResponses)
+                    moviesResponse.value = ApiResponse.success(response.body()!!.results!!)
                     EspressoIdlingResource.decrement()
                 }
             }
@@ -43,11 +43,12 @@ class RemoteDataSource {
                 EspressoIdlingResource.decrement()
             }
         })
+        return moviesResponse
     }
 
-    fun getMovieSelected(callback: LoadMovieSelectedCallback, id: String) {
+    fun getMovieSelected(id: String) : LiveData<ApiResponse<DetailMovieResponse?>> {
         EspressoIdlingResource.increment()
-        var movieResponse: DetailMovieResponse?
+        val movieResponse = MutableLiveData<ApiResponse<DetailMovieResponse?>>()
         val client = ApiConfig.getApiService().getDetailMovie(
                 id,
                 "db60181fe10f220153af611c6d461e50",
@@ -56,9 +57,7 @@ class RemoteDataSource {
         client.enqueue(object : Callback<DetailMovieResponse>{
             override fun onResponse(call: Call<DetailMovieResponse>, response: Response<DetailMovieResponse>) {
                 if (response.isSuccessful){
-                    movieResponse = response.body()
-                    Log.i(TAG, "datanya: ${movieResponse.toString()}")
-                    callback.onMovieSelectedReceived(movieResponse)
+                    movieResponse.value = ApiResponse.success(response.body()!!)
                     EspressoIdlingResource.decrement()
                 }
             }
@@ -67,13 +66,13 @@ class RemoteDataSource {
                 t.printStackTrace()
                 EspressoIdlingResource.decrement()
             }
-
         })
+        return movieResponse
     }
 
-    fun getAllTVShows(callback: LoadTVShowsCallback) {
+    fun getAllTVShows() : LiveData<ApiResponse<List<ResultsItemTVShow?>>> {
         EspressoIdlingResource.increment()
-        var moviesRespons: List<ResultsItemTVShow?>?
+        var tvShowsRespons = MutableLiveData<ApiResponse<List<ResultsItemTVShow?>>>()
         val client = ApiConfig.getApiService().getTVShows(
                 "db60181fe10f220153af611c6d461e50",
                 "id-ID",
@@ -83,9 +82,7 @@ class RemoteDataSource {
         client.enqueue(object : Callback<TVShowResponse>{
             override fun onResponse(call: Call<TVShowResponse>, response: Response<TVShowResponse>) {
                 if (response.isSuccessful){
-                    moviesRespons = response.body()?.results
-                    Log.i(TAG, "datanya: ${moviesRespons.toString()}")
-                    callback.onAllTVShowsReceived(moviesRespons)
+                    tvShowsRespons.value = ApiResponse.success(response.body()!!.results!!)
                     EspressoIdlingResource.decrement()
                 }
             }
@@ -95,11 +92,12 @@ class RemoteDataSource {
                 EspressoIdlingResource.decrement()
             }
         })
+        return tvShowsRespons
     }
 
-    fun getTVShowSelected(callback: LoadTVShowSelectedCallback, id: String) {
+    fun getTVShowSelected(id: String) : LiveData<ApiResponse<DetailTVShowResponse?>> {
         EspressoIdlingResource.increment()
-        var tvShowResponse: DetailTVShowResponse?
+        val tvShowResponse = MutableLiveData<ApiResponse<DetailTVShowResponse?>>()
         val client = ApiConfig.getApiService().getDetailTVShow(
                 id,
                 "db60181fe10f220153af611c6d461e50",
@@ -108,9 +106,7 @@ class RemoteDataSource {
         client.enqueue(object : Callback<DetailTVShowResponse>{
             override fun onResponse(call: Call<DetailTVShowResponse>, response: Response<DetailTVShowResponse>) {
                 if (response.isSuccessful){
-                    tvShowResponse = response.body()
-                    Log.i(TAG, "datanya: ${tvShowResponse.toString()}")
-                    callback.onTVShowsSelectedReceived(tvShowResponse)
+                    tvShowResponse.value = ApiResponse.success(response.body()!!)
                     EspressoIdlingResource.decrement()
                 }
             }
@@ -119,24 +115,16 @@ class RemoteDataSource {
                 t.printStackTrace()
                 EspressoIdlingResource.decrement()
             }
-
         })
+        return tvShowResponse
     }
 
     interface LoadMoviesCallback {
         fun onAllMoviesReceived(moviesResponses: List<ResultsItemMovie?>?)
     }
 
-    interface LoadMovieSelectedCallback {
-        fun onMovieSelectedReceived(movieResponse: DetailMovieResponse?)
-    }
-
     interface LoadTVShowsCallback {
         fun onAllTVShowsReceived(tvShowRespons: List<ResultsItemTVShow?>?)
-    }
-
-    interface LoadTVShowSelectedCallback {
-        fun onTVShowsSelectedReceived(tvShowResponse: DetailTVShowResponse?)
     }
 }
 

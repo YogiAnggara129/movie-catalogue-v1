@@ -40,5 +40,8 @@ data class MovieEntity (
     val income: String? = null,
 
     @ColumnInfo(name = "image_path")
-    val imagePath: String
+    val imagePath: String,
+
+    @ColumnInfo(name = "is_favorite")
+    var isFavorite: Boolean = false
 )

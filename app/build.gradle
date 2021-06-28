@@ -79,6 +79,7 @@ dependencies {
 
     //architecture component
     implementation "androidx.lifecycle:lifecycle-viewmodel:$archLifecycleVersion"
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
     implementation "androidx.room:room-runtime:$roomRuntimeVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
 }

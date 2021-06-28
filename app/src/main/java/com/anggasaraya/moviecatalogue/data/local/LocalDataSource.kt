@@ -16,20 +16,37 @@ class LocalDataSource private constructor(private val mCatalogueDao: CatalogueDa
         }
     }
 
-    fun getAllFavoriteMovies() = mCatalogueDao.getMovies()
+    fun getAllMovies() = mCatalogueDao.getMovies()
+
+    fun getAllFavoriteMovies() = mCatalogueDao.getFavoriteMovies()
 
     fun getFavoriteMovieSelected(id: String) = mCatalogueDao.getMovieSelected(id)
 
-    fun insertFavoriteMovie(movie: MovieEntity) = mCatalogueDao.insertMovie(movie)
+    fun insertMovies(movies: List<MovieEntity>) = mCatalogueDao.insertMovie(movies)
 
     fun deleteFavoriteMovie(movie: MovieEntity) = mCatalogueDao.deleteMovie(movie)
 
-    fun getAllFavoriteTVShows() = mCatalogueDao.getTVShows()
+    fun updateMovieDetail(movie: MovieEntity) = mCatalogueDao.updateMovie(movie)
+
+    fun setMovieFavorite(movie: MovieEntity, newState: Boolean) {
+        movie.isFavorite = newState
+        mCatalogueDao.updateMovie(movie)
+    }
+
+    fun getAllTVShows() = mCatalogueDao.getTVShows()
+
+    fun getAllFavoriteTVShows() = mCatalogueDao.getFavoriteTVShows()
 
     fun getFavoriteTVShowSelected(id: String) = mCatalogueDao.getTVShowSelected(id)
 
-    fun insertFavoriteTVShow(tvShow: TVShowEntity) = mCatalogueDao.insertTVShow(tvShow)
+    fun insertTVShow(tvShows: List<TVShowEntity>) = mCatalogueDao.insertTVShow(tvShows)
 
     fun deleteFavoriteTVShow(tvShow: TVShowEntity) = mCatalogueDao.deleteTVShow(tvShow)
 
+    fun updateTVShowDetail(tvShow: TVShowEntity) = mCatalogueDao.updateTVShow(tvShow)
+
+    fun setTVShowFavorite(tvShow: TVShowEntity, newState: Boolean) {
+        tvShow.isFavorite = newState
+        mCatalogueDao.updateTVShow(tvShow)
+    }
 }

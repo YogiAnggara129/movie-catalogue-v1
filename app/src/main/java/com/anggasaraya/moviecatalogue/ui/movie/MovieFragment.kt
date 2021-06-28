@@ -5,12 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anggasaraya.moviecatalogue.data.local.entity.MovieEntity
 import com.anggasaraya.moviecatalogue.databinding.FragmentMovieBinding
 import com.anggasaraya.moviecatalogue.viewmodel.ViewModelFactory
+import com.anggasaraya.moviecatalogue.vo.Resource
+import com.anggasaraya.moviecatalogue.vo.Status
+import retrofit2.Response
 
 class MovieFragment : Fragment() {
     private lateinit var fragmentMovieBinding: FragmentMovieBinding
@@ -30,10 +36,21 @@ class MovieFragment : Fragment() {
             val movieAdapter = MovieAdapter()
 
             fragmentMovieBinding.progressBar.visibility = View.VISIBLE
-            val moviesObserver = Observer<List<MovieEntity>> { movies ->
-                fragmentMovieBinding.progressBar.visibility = View.GONE
-                movieAdapter.setMovies(movies)
-                movieAdapter.notifyDataSetChanged()
+            val moviesObserver = Observer<Resource<PagedList<MovieEntity>>> { movies ->
+                if(movies != null){
+                    when(movies.status){
+                        Status.LOADING -> fragmentMovieBinding.progressBar.visibility = View.VISIBLE
+                        Status.SUCCESS -> {
+                            fragmentMovieBinding.progressBar.visibility = View.GONE
+                            movieAdapter.submitList(movies.data!!)
+                            movieAdapter.notifyDataSetChanged()
+                        }
+                        Status.ERROR -> {
+                            fragmentMovieBinding.progressBar.visibility = View.GONE
+                            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
             viewModel.getAllMovies().observe(viewLifecycleOwner, moviesObserver)
 
