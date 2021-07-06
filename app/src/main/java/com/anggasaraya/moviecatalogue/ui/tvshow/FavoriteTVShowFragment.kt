@@ -37,7 +37,7 @@ class FavoriteTVShowFragment : Fragment() {
             }
             viewModel.getAllFavoriteTVShows().observe(viewLifecycleOwner, tvShowsObserver)
 
-            with(fragmentFavoriteTVShowBinding.rvMovie){
+            with(fragmentFavoriteTVShowBinding.rvTvshowFav){
                 layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
                 setHasFixedSize(true)
                 adapter = tvShowAdapter

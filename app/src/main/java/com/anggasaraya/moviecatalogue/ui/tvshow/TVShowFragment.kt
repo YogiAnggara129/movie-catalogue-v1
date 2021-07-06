@@ -8,9 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.paging.PagedList
-import com.anggasaraya.moviecatalogue.data.local.entity.MovieEntity
 import com.anggasaraya.moviecatalogue.data.local.entity.TVShowEntity
 import com.anggasaraya.moviecatalogue.databinding.FragmentTVShowBinding
 import com.anggasaraya.moviecatalogue.viewmodel.ViewModelFactory

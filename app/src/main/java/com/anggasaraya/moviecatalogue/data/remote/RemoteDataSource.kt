@@ -72,7 +72,7 @@ class RemoteDataSource {
 
     fun getAllTVShows() : LiveData<ApiResponse<List<ResultsItemTVShow?>>> {
         EspressoIdlingResource.increment()
-        var tvShowsRespons = MutableLiveData<ApiResponse<List<ResultsItemTVShow?>>>()
+        val tvShowsRespons = MutableLiveData<ApiResponse<List<ResultsItemTVShow?>>>()
         val client = ApiConfig.getApiService().getTVShows(
                 "db60181fe10f220153af611c6d461e50",
                 "id-ID",
@@ -117,14 +117,6 @@ class RemoteDataSource {
             }
         })
         return tvShowResponse
-    }
-
-    interface LoadMoviesCallback {
-        fun onAllMoviesReceived(moviesResponses: List<ResultsItemMovie?>?)
-    }
-
-    interface LoadTVShowsCallback {
-        fun onAllTVShowsReceived(tvShowRespons: List<ResultsItemTVShow?>?)
     }
 }
 

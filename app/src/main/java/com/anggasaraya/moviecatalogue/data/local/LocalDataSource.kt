@@ -20,11 +20,9 @@ class LocalDataSource private constructor(private val mCatalogueDao: CatalogueDa
 
     fun getAllFavoriteMovies() = mCatalogueDao.getFavoriteMovies()
 
-    fun getFavoriteMovieSelected(id: String) = mCatalogueDao.getMovieSelected(id)
+    fun getMovieSelected(id: String) = mCatalogueDao.getMovieSelected(id)
 
     fun insertMovies(movies: List<MovieEntity>) = mCatalogueDao.insertMovie(movies)
-
-    fun deleteFavoriteMovie(movie: MovieEntity) = mCatalogueDao.deleteMovie(movie)
 
     fun updateMovieDetail(movie: MovieEntity) = mCatalogueDao.updateMovie(movie)
 
@@ -37,11 +35,9 @@ class LocalDataSource private constructor(private val mCatalogueDao: CatalogueDa
 
     fun getAllFavoriteTVShows() = mCatalogueDao.getFavoriteTVShows()
 
-    fun getFavoriteTVShowSelected(id: String) = mCatalogueDao.getTVShowSelected(id)
+    fun getTVShowSelected(id: String) = mCatalogueDao.getTVShowSelected(id)
 
     fun insertTVShow(tvShows: List<TVShowEntity>) = mCatalogueDao.insertTVShow(tvShows)
-
-    fun deleteFavoriteTVShow(tvShow: TVShowEntity) = mCatalogueDao.deleteTVShow(tvShow)
 
     fun updateTVShowDetail(tvShow: TVShowEntity) = mCatalogueDao.updateTVShow(tvShow)
 

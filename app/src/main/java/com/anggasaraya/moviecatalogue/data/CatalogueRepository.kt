@@ -1,7 +1,6 @@
 package com.anggasaraya.moviecatalogue.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.anggasaraya.moviecatalogue.data.local.LocalDataSource
@@ -54,7 +53,7 @@ class CatalogueRepository private constructor(
             public override fun saveCallResult(data: List<ResultsItemMovie?>) {
                 val movieList = ArrayList<MovieEntity>()
 
-                for (d in data!!){
+                for (d in data){
                     val movie = MovieEntity(
                         id = d?.id.toString(),
                         dateReleased = d?.releaseDate.toString(),
@@ -74,7 +73,7 @@ class CatalogueRepository private constructor(
 
         return object : NetworkBoundResource<MovieEntity, DetailMovieResponse?>(appExecutors) {
             public override fun loadFromDB(): LiveData<MovieEntity> =
-                    localDataSource.getFavoriteMovieSelected(id)
+                    localDataSource.getMovieSelected(id)
 
             override fun shouldFetch(data: MovieEntity?): Boolean =
                 data?.userScore == null
@@ -125,9 +124,6 @@ class CatalogueRepository private constructor(
     override fun setMovieFavorite(movie: MovieEntity, state: Boolean) =
             appExecutors.diskIO().execute { localDataSource.setMovieFavorite(movie, state) }
 
-    override fun dropMovieFromDb(movie: MovieEntity) =
-            appExecutors.diskIO().execute { localDataSource.deleteFavoriteMovie(movie) }
-
     override fun getAllTVShows(): LiveData<Resource<PagedList<TVShowEntity>>> {
         return object : NetworkBoundResource<PagedList<TVShowEntity>, List<ResultsItemTVShow?>>(appExecutors) {
             public override fun loadFromDB(): LiveData<PagedList<TVShowEntity>> {
@@ -148,7 +144,7 @@ class CatalogueRepository private constructor(
             public override fun saveCallResult(data: List<ResultsItemTVShow?>) {
                 val tvShowList = ArrayList<TVShowEntity>()
 
-                for (d in data!!){
+                for (d in data){
                     val tvShow = TVShowEntity(
                             id = d?.id.toString(),
                             dateReleased = d?.firstAirDate.toString(),
@@ -167,7 +163,7 @@ class CatalogueRepository private constructor(
     override fun getTVShowSelected(id: String): LiveData<Resource<TVShowEntity>> {
         return object : NetworkBoundResource<TVShowEntity, DetailTVShowResponse?>(appExecutors) {
             public override fun loadFromDB(): LiveData<TVShowEntity> =
-                    localDataSource.getFavoriteTVShowSelected(id)
+                    localDataSource.getTVShowSelected(id)
 
             override fun shouldFetch(data: TVShowEntity?): Boolean =
                     data?.userScore == null
@@ -215,7 +211,4 @@ class CatalogueRepository private constructor(
 
     override fun setTVShowFavorite(tvShow: TVShowEntity, state: Boolean) =
             appExecutors.diskIO().execute { localDataSource.setTVShowFavorite(tvShow, state) }
-
-    override fun dropTVShowFromDb(tvShow: TVShowEntity) =
-            appExecutors.diskIO().execute { localDataSource.deleteFavoriteTVShow(tvShow) }
 }

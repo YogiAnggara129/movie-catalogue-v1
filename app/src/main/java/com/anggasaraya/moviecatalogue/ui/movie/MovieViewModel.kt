@@ -13,7 +13,7 @@ class MovieViewModel(private val mCatalogueRepository: CatalogueRepository) : Vi
     private val movieId = MutableLiveData<String>()
     private val _isFavorite = MutableLiveData<Boolean>()
     fun isFavorite() : LiveData<Boolean> {
-        _isFavorite.value = (movieData.value?.data?.isFavorite)
+        _isFavorite.value = movieData.value?.data?.isFavorite
         return _isFavorite
     }
 
@@ -24,8 +24,6 @@ class MovieViewModel(private val mCatalogueRepository: CatalogueRepository) : Vi
     var movieData: LiveData<Resource<MovieEntity>> = Transformations.switchMap(movieId) { mMovieId ->
         mCatalogueRepository.getMovieSelected(mMovieId)
     }
-
-    fun getSelectedMovie(id: String) = mCatalogueRepository.getMovieSelected(id)
 
     fun getAllMovies() : LiveData<Resource<PagedList<MovieEntity>>> = mCatalogueRepository.getAllMovies()
 

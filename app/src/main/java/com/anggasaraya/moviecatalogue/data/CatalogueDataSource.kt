@@ -11,10 +11,8 @@ interface CatalogueDataSource {
     fun getMovieSelected(id: String): LiveData<Resource<MovieEntity>>
     fun setMovieFavorite(movie: MovieEntity, state: Boolean)
     fun getAllFavoriteMovies(): LiveData<PagedList<MovieEntity>>
-    fun dropMovieFromDb(movie: MovieEntity)
     fun getAllTVShows(): LiveData<Resource<PagedList<TVShowEntity>>>
     fun getTVShowSelected(id: String): LiveData<Resource<TVShowEntity>>
     fun setTVShowFavorite(tvShow: TVShowEntity, state: Boolean)
     fun getAllFavoriteTVShows(): LiveData<PagedList<TVShowEntity>>
-    fun dropTVShowFromDb(tvShow: TVShowEntity)
 }

@@ -21,9 +21,6 @@ interface CatalogueDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(module: List<MovieEntity>)
 
-    @Delete
-    fun deleteMovie(module: MovieEntity)
-
     @Update
     fun updateMovie(module: MovieEntity)
 
@@ -38,9 +35,6 @@ interface CatalogueDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTVShow(module: List<TVShowEntity>)
-
-    @Delete
-    fun deleteTVShow(module: TVShowEntity)
 
     @Update
     fun updateTVShow(module: TVShowEntity)
