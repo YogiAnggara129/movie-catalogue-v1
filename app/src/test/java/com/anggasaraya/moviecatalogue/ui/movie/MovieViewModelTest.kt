@@ -57,6 +57,7 @@ class MovieViewModelTest{
 
         viewModel.getAllMovies().observeForever(observer)
         Mockito.verify(observer).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getAllMovies()
 
         val expectedValue = expected.value
         val actualValue = viewModel.getAllMovies().value
@@ -75,6 +76,7 @@ class MovieViewModelTest{
 
         viewModel.getAllMovies().observeForever(observer)
         Mockito.verify(observer).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getAllMovies()
 
         val actualValueDataSize = viewModel.getAllMovies().value?.data?.size
         assertTrue("size of data should be 0, actual is $actualValueDataSize", actualValueDataSize == 0)
@@ -90,6 +92,7 @@ class MovieViewModelTest{
 
         viewModel.getAllMovies().observeForever(observer)
         Mockito.verify(observer).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getAllMovies()
 
         val actualMessage = viewModel.getAllMovies().value?.message
         assertEquals(expectedMessage, actualMessage)
@@ -106,6 +109,7 @@ class MovieViewModelTest{
         viewModel.movieData.observeForever(observerWithoutPagedList)
 
         Mockito.verify(observerWithoutPagedList).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getMovieSelected(id)
 
         val expectedValue = expected.value
         val actualValue = viewModel.movieData.value
@@ -125,6 +129,7 @@ class MovieViewModelTest{
         viewModel.movieData.observeForever(observerWithoutPagedList)
 
         Mockito.verify(observerWithoutPagedList).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getMovieSelected(id)
 
         val expectedValue = expected.value
         val actualValue = viewModel.movieData.value
@@ -141,6 +146,7 @@ class MovieViewModelTest{
 
         viewModel.getAllFavoriteMovies().observeForever(observerWithoutResource)
         Mockito.verify(observerWithoutResource).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getAllFavoriteMovies()
 
         val expectedValue = expected.value
         val actualValue = viewModel.getAllFavoriteMovies().value
@@ -158,6 +164,7 @@ class MovieViewModelTest{
 
         viewModel.getAllFavoriteMovies().observeForever(observerWithoutResource)
         Mockito.verify(observerWithoutResource).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getAllFavoriteMovies()
 
         val actualValueDataSize = viewModel.getAllFavoriteMovies().value?.size
         assertTrue("size of data should be 0, actual is $actualValueDataSize", actualValueDataSize == 0)

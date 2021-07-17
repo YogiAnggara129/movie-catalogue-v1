@@ -59,6 +59,7 @@ class TVShowViewModelTest{
 
         viewModel.getAllTVShows().observeForever(observer)
         Mockito.verify(observer).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getAllTVShows()
 
         val expectedValue = expected.value
         val actualValue = viewModel.getAllTVShows().value
@@ -77,6 +78,7 @@ class TVShowViewModelTest{
 
         viewModel.getAllTVShows().observeForever(observer)
         Mockito.verify(observer).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getAllTVShows()
 
         val actualValueDataSize = viewModel.getAllTVShows().value?.data?.size
         assertTrue("size of data should be 0, actual is $actualValueDataSize", actualValueDataSize == 0)
@@ -92,6 +94,7 @@ class TVShowViewModelTest{
 
         viewModel.getAllTVShows().observeForever(observer)
         Mockito.verify(observer).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getAllTVShows()
 
         val actualMessage = viewModel.getAllTVShows().value?.message
         assertEquals(expectedMessage, actualMessage)
@@ -108,6 +111,7 @@ class TVShowViewModelTest{
         viewModel.tvShowData.observeForever(observerWithoutPagedList)
 
         Mockito.verify(observerWithoutPagedList).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getTVShowSelected(id)
 
         val expectedValue = expected.value
         val actualValue = viewModel.tvShowData.value
@@ -127,6 +131,7 @@ class TVShowViewModelTest{
         viewModel.tvShowData.observeForever(observerWithoutPagedList)
 
         Mockito.verify(observerWithoutPagedList).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getTVShowSelected(id)
 
         val expectedValue = expected.value
         val actualValue = viewModel.tvShowData.value
@@ -144,6 +149,7 @@ class TVShowViewModelTest{
         viewModel.setFavorite()
         viewModel.getAllFavoriteTVShows().observeForever(observerWithoutResource)
         Mockito.verify(observerWithoutResource).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getAllFavoriteTVShows()
 
         val expectedValue = expected.value
         val actualValue = viewModel.getAllFavoriteTVShows().value
@@ -161,6 +167,7 @@ class TVShowViewModelTest{
 
         viewModel.getAllFavoriteTVShows().observeForever(observerWithoutResource)
         Mockito.verify(observerWithoutResource).onChanged(expected.value)
+        Mockito.verify(catalogueRepository).getAllFavoriteTVShows()
 
         val actualValueDataSize = viewModel.getAllFavoriteTVShows().value?.size
         assertTrue("size of data should be 0, actual is $actualValueDataSize", actualValueDataSize == 0)
